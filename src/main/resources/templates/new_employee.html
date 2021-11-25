@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Managements System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+  <h1>Employee Management System</h1>
+    <hr>
+    <h2>Add Employee</h2>
+        <form action="#" th:action="@{/saveEmployee}" th:object="${employee}" method="post">
+            <input type="text" th:field="*{firstName}" placeholder="first name" class="form-control mb-4 col-4">
+            <input type="text" th:field="*{lastName}" placeholder="Employee Last Name" class="form-control mb-4 col-4">
+            <input type="text" th:field="*{email}" placeholder="employee email" class="form-control mb-4 col-4">
+
+            <button type="submit" class="btn btn-info col-2">Save Employee</button>
+
+
+        </form>
+
+
+</div>
+
+</body>
+</html>
