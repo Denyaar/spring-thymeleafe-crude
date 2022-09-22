@@ -8,6 +8,7 @@ class SpringThymeleafeCrudeApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }
