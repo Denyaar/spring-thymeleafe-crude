@@ -23,7 +23,7 @@ public class EmployeeService {
     public List<Employee> getAllEmployees(){
 
 
-        return (List<Employee>) employeeRepository.findAll();
+        return employeeRepository.findAll();
     }
 
     public Employee getEmployeeById(Long id){
@@ -36,6 +36,17 @@ public class EmployeeService {
         }
         return employee;
     }
+
+
+    public  Employee update(Employee employee){
+        boolean exist = employeeRepository.existsById(employee.getId());
+        if(exist){
+            employeeRepository.save(employee);
+        }
+        return null;
+    }
+
+
     public void deleteEmployeeById(long id){
         this.employeeRepository.deleteById(id);
     }
