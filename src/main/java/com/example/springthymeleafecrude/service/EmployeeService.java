@@ -14,15 +14,11 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
     public void saveEmployee(Employee employee){
-
-
         employeeRepository.save(employee);
     }
 
 
     public List<Employee> getAllEmployees(){
-
-
         return employeeRepository.findAll();
     }
 
