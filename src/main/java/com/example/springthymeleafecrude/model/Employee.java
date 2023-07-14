@@ -1,10 +1,19 @@
 package com.example.springthymeleafecrude.model;
 
 
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
-@Table(name = "employees")
+@Table(
+        name = "employees",
+        uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email"),
+        @UniqueConstraint(columnNames = "last_name")
+}
+)
 public class Employee {
 
     @Id
@@ -12,11 +21,18 @@ public class Employee {
     private Long id;
 
     @Column(name = "first_name")
+    @NotNull(message = "First name cannot be null")
+    @Pattern(regexp = "[A-Za-z0-9]+", message = "Please follow the instructions on first name")
     private String firstName;
 
     @Column(name="last_name")
+    @NotNull(message = "Last name cannot be null")
     private String lastName;
+
+
     @Column(name = "email")
+    @NotNull(message = "First name cannot be null")
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid Email")
     private String email;
 
     public Long getId() {

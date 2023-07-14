@@ -9,12 +9,14 @@
 package com.example.springthymeleafecrude.apiCOntrollers;
 
 import com.example.springthymeleafecrude.model.Employee;
+import com.example.springthymeleafecrude.repository.EmployeeRepository;
 import com.example.springthymeleafecrude.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -26,14 +28,17 @@ public class EmployeeApiCOntroller {
     @Autowired
     EmployeeService employeeService;
 
+    @Autowired
+    EmployeeRepository employeeRepository;
+
     @GetMapping("/all")
    public List<Employee> Allemployess(){
        return employeeService.getAllEmployees();
     }
 
     @PostMapping ("/add")
-    public void addEmployee( @RequestBody Employee employee){
-      employeeService.saveEmployee(employee);
+    public Employee addEmployee( @RequestBody @Valid Employee employee){
+        return employeeRepository.save(employee);
     }
 
     @GetMapping("/employee/{id}")
@@ -47,7 +52,7 @@ public class EmployeeApiCOntroller {
     }
 
     @PutMapping("/employee/{id}")
-    public ResponseEntity<Employee> update(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> update(@RequestBody @Valid Employee employee) {
         try {
             employeeService.update(employee);
             return new ResponseEntity<>(employee, HttpStatus.OK);

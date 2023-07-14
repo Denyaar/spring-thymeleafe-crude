@@ -5,11 +5,9 @@ import com.example.springthymeleafecrude.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -25,18 +23,20 @@ public class EmployeeController {
         return "index";
     }
     @GetMapping("/ShowNewEmployeeForm")
-            public String ShowNewEmployeeForm(Model model){
+    public String ShowNewEmployeeForm(Model model ){
         Employee employee= new Employee();
         model.addAttribute("employee",employee);
         return "new_employee";
     }
     @PostMapping("/saveEmployee")
-    public String saveEmployee(@ModelAttribute("employee") Employee employee){
+    public String saveEmployee(@ModelAttribute("employee") @Valid Employee employee){
         employeeService.saveEmployee(employee);
         return "redirect:/";
     }
+
+    //Taking data from database then put it on update form
     @GetMapping("/showFormUpdate/{id}")
-    public String showFormUpdate(@PathVariable(value = "id") long id,Model model){
+    public String showFormUpdate(@Valid @PathVariable(value = "id") long id,Model model){
         //get employee from the service
         Employee employee=employeeService.getEmployeeById(id);
         model.addAttribute("employee",employee);
@@ -45,7 +45,7 @@ public class EmployeeController {
     }
     @GetMapping("/deleteEmployee/{id}")
     public String deleteEmployee(@PathVariable(value = "id") long id){
-    this.employeeService.deleteEmployeeById(id);
-    return "redirect:/";
+        this.employeeService.deleteEmployeeById(id);
+        return "redirect:/";
     }
 }
