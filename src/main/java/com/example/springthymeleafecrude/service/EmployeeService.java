@@ -1,6 +1,7 @@
 package com.example.springthymeleafecrude.service;
 
 import com.example.springthymeleafecrude.model.Employee;
+import com.example.springthymeleafecrude.AdviceExceptions.MaErrorMakuru;
 import com.example.springthymeleafecrude.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class EmployeeService {
         if(optional.isPresent()){
             employee=optional.get();
         }else {
-            throw new RuntimeException("Employee not available" + id);
+            throw new MaErrorMakuru("Employee not available" + id);
         }
         return employee;
     }

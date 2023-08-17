@@ -9,6 +9,7 @@
 package com.example.springthymeleafecrude.apiCOntrollers;
 
 import com.example.springthymeleafecrude.model.Employee;
+import com.example.springthymeleafecrude.AdviceExceptions.MaErrorMakuru;
 import com.example.springthymeleafecrude.repository.EmployeeRepository;
 import com.example.springthymeleafecrude.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,8 @@ public class EmployeeApiCOntroller {
         try {
             Employee employee = employeeService.getEmployeeById(id);
             return new ResponseEntity<>(employee, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (RuntimeException e) {
+            throw new  MaErrorMakuru("Uyu haako baba" + id);
         }
     }
 
