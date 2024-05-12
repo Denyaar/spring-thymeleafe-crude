@@ -8,6 +8,7 @@
 
 package com.example.springthymeleafecrude.apiCOntrollers;
 
+import com.example.springthymeleafecrude.event.AuditEventPublisher;
 import com.example.springthymeleafecrude.model.Employee;
 import com.example.springthymeleafecrude.repository.EmployeeRepository;
 import com.example.springthymeleafecrude.service.EmployeeService;
@@ -26,6 +27,9 @@ import java.util.NoSuchElementException;
 public class EmployeeApiCOntroller {
 
     @Autowired
+    private AuditEventPublisher publisher;
+
+    @Autowired
     EmployeeService employeeService;
 
     @Autowired
@@ -38,6 +42,7 @@ public class EmployeeApiCOntroller {
 
     @PostMapping ("/add")
     public Employee addEmployee( @RequestBody @Valid Employee employee){
+        publisher.publishEvent("Employee saved successfully  with name"+ employee.getFirstName() +" "+ employee.getLastName());
         return employeeRepository.save(employee);
     }
 

@@ -1,5 +1,7 @@
 package com.example.springthymeleafecrude.controller;
 
+import com.example.springthymeleafecrude.event.AuditEvent;
+import com.example.springthymeleafecrude.event.AuditEventPublisher;
 import com.example.springthymeleafecrude.model.Employee;
 import com.example.springthymeleafecrude.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,15 @@ import java.util.stream.Collectors;
 
 @Controller
 public class EmployeeController {
+
+    @Autowired
+    private AuditEventPublisher publisher;
+
+
     @Autowired
     public EmployeeService employeeService;
+
+
     //display list of employees
     @GetMapping("/")
     public String viewHomePage(Model model) {
@@ -32,6 +41,7 @@ public class EmployeeController {
     @PostMapping("/saveEmployee")
     public String saveEmployee(@ModelAttribute("employee") @Valid Employee employee){
         employeeService.saveEmployee(employee);
+        publisher.publishEvent("User saved Successfully  with  name " + employee.getFirstName()+ " " + employee.getLastName());
         return "redirect:/";
     }
 
