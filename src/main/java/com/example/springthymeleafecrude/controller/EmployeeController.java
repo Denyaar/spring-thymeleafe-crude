@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class EmployeeController {
@@ -49,9 +50,16 @@ public class EmployeeController {
         return "redirect:/";
     }
 
-    @GetMapping
-    Iterable<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    @GetMapping("/getEmployees-with-long-names")
+    @ResponseBody
+    Iterable<Employee> getAllEmployees(Model model) {
+        Iterable<Employee> allEmployees  =  employeeService.getAllEmployees()
+                .parallelStream()
+                .filter(employee -> employee.getFirstName().length() > 5)
+                .collect(Collectors.toList());
+
+         model.addAttribute("listEmp", allEmployees);
+         return allEmployees;
     }
 
 }
