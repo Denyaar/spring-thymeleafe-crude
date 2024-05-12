@@ -48,4 +48,10 @@ public class EmployeeController {
         this.employeeService.deleteEmployeeById(id);
         return "redirect:/";
     }
+
+    @GetMapping
+    Iterable<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
+    }
+
 }
